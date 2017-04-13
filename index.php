@@ -26,3 +26,9 @@ $db = new IMooc\Database\Mysqli;
 $db->connect('localhost', 'homestead', 'secret', 'ysj');
 var_dump($db->query('show databases'));
 $db->close();
+
+$user = new IMooc\User(1);
+// var_dump($user->id, $user->name);
+//自动更新表数据
+$user->name = 'ysj';
+$user->email = '1@qq.com';

@@ -10,16 +10,17 @@ class Mysqli implements IDatabase
 	function connect($host, $user, $password, $db_name)
 	{
 		$connect = mysqli_connect($host, $user, $password, $db_name);
-		// if($connect){
-		// 	die('连接数据库失败'.mysqli_error());
-		// }
+		if(!$connect){
+			die('连接数据库失败'.mysqli_error());
+		}
 		//将连接资源保存起来
 		$this->connect = $connect;
 	}
 
 	function query($sql)
 	{
-		mysqli_query($this->connect, $sql);
+		mysqli_set_charset($this->connect, "utf8");
+		return mysqli_query($this->connect, $sql);
 	}
 	
 	function close()
