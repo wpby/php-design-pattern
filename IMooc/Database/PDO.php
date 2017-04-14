@@ -11,7 +11,7 @@ class PDO implements IDatabase
 	function connect($host, $user, $password, $db_name)
 	{
 		//new 一个根目录的PDO
-		$connect = new \PDO("mysqli:$host=$host;dbname=$dbname", $user, $password);
+		$connect = new \PDO("mysqli:host=$host;dbname=$db_name", $user, $password);
 		//将连接资源保存起来
 		$this->connect = $connect;
 	}

@@ -7,7 +7,8 @@ use IMooc\IDatabase;
 class Mysql implements IDatabase
 {
 	protected $conn;
-	public function  connect($host, $user, $password, $data_name)
+
+	public function connect($host, $user, $password, $db_name)
 	{
 		$conn = mysql_connect($host, $user, $password);
 		if(!$con){

@@ -6,6 +6,6 @@ class index
 {
 	static function test()
 	{
-		echo '测试~~QAQ';
+		echo '控制器下面的index类的test静态方法<br>';
 	}
 }
