@@ -238,3 +238,40 @@ $event->addObserver($observer1);
 //增加观察者2
 $event->addObserver(new Observer2());
 $event->tigger();
+
+/**
+ * 原型模式 
+ * 跟工厂模式作用类似，都是用来创建对象
+ * 与工厂模式的实现不同，原型模式是先创建好一个原型对象
+ * 然后clone原型对象来创建新的对象，这样就免去了类创建时重复的初始化操作
+ * 原型模式使用与大对象的创建。创建一个大对象需要很大的开销。如果每次new就会消耗很大，
+ * 原型模式仅需内存拷贝即可
+ * 
+ */
+$canvas1 = new IMooc\Canvas();
+$canvas1->init();
+//画一个矩形
+$canvas1->rect(3, 6, 4, 12);
+$canvas1->draw();
+//绘制两个图形，传统方式需要new两次，分别进行描述,很占资源
+echo '<br>';
+$canvas2 = new IMooc\Canvas();
+$canvas2->init();
+//画一个矩形
+$canvas2->rect(3, 6, 4, 12);
+$canvas2->draw();
+
+//原型对象
+$prototype = new IMooc\Canvas();
+$prototype->init();
+/*建立原型对象结束*/
+//需要多个画布的时候，不在需要new IMooc\Canvas();
+
+//画布1
+$canvas1 = clone $prototype;
+$canvas1->rect(3, 6, 4, 12);
+$canvas1->draw();
+//画布2
+$canvas2 = clone $prototype;
+$canvas2->rect(3, 6, 4, 12);
+$canvas2->draw();
