@@ -188,4 +188,53 @@ class dataObject
 
 echo '<br>调用了dataObject类<br>';
 $data = new dataObject();
-$data->index();
+// $data->index();
+
+/**
+ * 观察者模式observer
+ * 当一个对象状态发生改变时,依赖它的对象全部会收到通知。并自动更新
+ * 观察者模式实现了低耦合，非入侵式的通知和更新机制
+ *继续事件发生者 
+ */
+
+class event extends IMooc\EventGenerator
+{
+	//表示触发了一个新的事件
+	function tigger()
+	{
+		echo 'Event<br>';
+		//传统模式直接写update 操作
+		// echo '逻辑1<br>';
+		// echo '逻辑2<br>';
+		// echo '逻辑3<br>';
+		// echo '逻辑4<br>';
+		//事件发生后，调用基类 的notify,通知所有观察者执行更新
+		$this->notify();
+	}
+}
+//观察者1,继承接口。继承用implemets
+class Observer1 implements IMooc\Observer
+{
+	function update($event_info = null)
+	{
+		echo '哈哈，成功了--';
+		echo '逻辑1<br>';
+	}
+}
+//观察2
+class Observer2 implements IMooc\Observer
+{
+	function update($event_info =null)
+	{
+		echo 'success2--';
+		echo '逻辑2<br>';
+	}
+}
+
+$event = new event();
+//增加观察者1
+$observer1 = new Observer1();
+$event->addObserver($observer1);
+//增加观察者2
+$event->addObserver(new Observer2());
+$event->tigger();
