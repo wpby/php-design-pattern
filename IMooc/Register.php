@@ -18,6 +18,9 @@ class Register
 	static function get($alias)
 	{
 		var_dump(__METHOD__);
+		if(!isset(self::$object[$alias])){
+			return false;
+		}
 		return self::$object[$alias];
 	}
 

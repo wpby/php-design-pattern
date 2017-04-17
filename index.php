@@ -50,6 +50,7 @@ $arr[0] = '打塔1';
 $arr[1] = '打塔2';
 // var_dump($arr);
 
+//php链接式操作的最关键一步是:不是最后一步的操作函数中必须return $this,即返回本对象，以调用后续的方法和使用
 // $data = new IMooc\Database();
 // $data->where('id=1')->where('name=ysj')->order('id desc')->limit(10);
 
@@ -136,8 +137,55 @@ $db->connect('localhost', 'homestead', 'secret', 'ysj');
 var_dump($db->query('show databases'));
 $db->close();
 
-$user = new IMooc\User(1);
+//数据对象映射模式
+// $user = new IMooc\User(4);
 // var_dump($user->id, $user->name);
 //自动更新表数据
-$user->name = 'ysj';
-$user->email = '1@qq.com';
+// $user->name = 'ysj';
+// $user->email = '1@qq.com';
+
+
+class dataObject
+{
+
+
+	public function index()
+	{
+		//new 对象，目前没有使用工厂方法，
+		//如果没有使用工厂方法的话，如果一旦类的名称发生改变的时候或者参数进行变动
+		//程序中使用这个类的关联都需要进行手动改变
+		//建议使用工厂方法进行操作，而不是new 对象
+		// $user = new IMooc\User(1);
+		echo '1';
+		//这个使用是工厂方法生成对象,不是在代码中去new
+		$user = IMooc\Factory::getUser(1);
+		var_dump($user);
+		$user->name = '闫绍杰';
+		$this->test1();
+		// $this->test2($user);
+	}
+
+	//初始化的时候没有user对象
+	public function test1()
+	{
+		echo 'test1';
+		$user = IMooc\Factory::getUser(1);
+		//然而test()方法中的邮箱没有保存成功,
+		//是因为email的值被index()方法中User对象的email覆盖掉了
+		var_dump($user);
+		$user->email = 'test1@qq.com';
+	}
+
+	//参数传递这个对象,缺点是很多方法需要操作这个对象就不方便了
+	//所以要改进，工厂模式中新增注册器模式
+	public function test2($user)
+	{
+		echo 'test2';
+		// var_dump($user);
+		$user->email = 'test2@qq.com';
+	}
+}
+
+echo '<br>调用了dataObject类<br>';
+$data = new dataObject();
+$data->index();
