@@ -5,6 +5,7 @@ namespace IMooc;
 class Canvas
 {
     public $data;
+    //保存所有添加过的装饰器
     protected $decorators = array();
 
     //需要20*10次的循环，消耗比较大。
@@ -21,6 +22,7 @@ class Canvas
         $this->data = $data;
     }
 
+    //装饰器接口
     function addDecorator(DrawDecorator $decorator)
     {
         $this->decorators[] = $decorator;
@@ -28,6 +30,7 @@ class Canvas
 
     function beforeDraw()
     {
+        //按照顺序，先进先出
         foreach($this->decorators as $decorator)
         {
             $decorator->beforeDraw();
@@ -36,6 +39,13 @@ class Canvas
 
     function afterDraw()
     {
+        // <div style='color'>
+        // <div style='style'>
+        // </div> 
+        // </div>
+        // 第一行和第四行匹配，第二行和第三行匹配
+        //需要一个数组的反转，后进先出
+        //反转是因为before和after都存在的情况下需要一一对应
         $decorators = array_reverse($this->decorators);
         foreach($decorators as $decorator)
         {

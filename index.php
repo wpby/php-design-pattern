@@ -275,3 +275,44 @@ $canvas1->draw();
 $canvas2 = clone $prototype;
 $canvas2->rect(3, 6, 4, 12);
 $canvas2->draw();
+
+/**
+ * 1.装饰器模式以动态的添加修改类的功能
+ * 2.一个类提供了一项功能,如果要在修改并添加额外的功能，传统的编程模式
+ * 需要写一个子类并集成它。并重新实现类的方法
+ * 3.使用装饰器模式，仅需在运行时添加一个装饰器对象即可实现，
+ * 可以实现最大的灵活性
+ */
+//策略模式侧重于IOC实现解耦
+//装饰器侧重不用继承和修改原对象下，可以动态修改类的功能
+
+/**
+ * 假如要修改canvas类中的draw方法。下面是传统方法
+ */
+class canvasChild extends IMooc\Canvas
+{
+	public function draw()
+	{
+		echo '<div style="color:red;">';
+		parent::draw();
+		echo '</div>';
+	}
+}
+echo '传统编程模式开始:<br>';
+$canvas = new IMooc\Canvas();
+$canvas->init();
+$canvas->rect(3, 6, 4, 12);
+$canvas->draw();
+echo '传统编程模式结束:<br>';
+echo '装饰器模式开始:<br>';
+//实现装饰器的调用
+$canvas = new IMooc\Canvas();
+//调用canvas里面的添加装饰器方法
+$canvas->init();
+//增加颜色装饰器
+$canvas->addDecorator(new IMooc\ColorDrawDecorator("green"));
+//增加字体大小装饰器
+$canvas->addDecorator(new IMooc\SizeDecorator("39px"));
+$canvas->draw();
+echo '装饰器模式结束:<br>';
+
