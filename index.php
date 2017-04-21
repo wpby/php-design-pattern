@@ -315,6 +315,7 @@ $canvas->addDecorator(new IMooc\ColorDrawDecorator("green"));
 $canvas->addDecorator(new IMooc\SizeDecorator("39px"));
 $canvas->draw();
 echo '装饰器模式结束:<br>';
+
 /**
  * 代理模式
  * 1.在客户端与实体之间建立一个代理对象(proxy),客户端对实体进行操作
@@ -325,3 +326,16 @@ echo '装饰器模式结束:<br>';
 $proxy = new IMooc\Proxy();
 $proxy->getUserName(1);
 $proxy->setUserName(1, '代理模式');
+
+
+/**
+ * 1.迭代器模式，在不需要了解内部实现的前提下，遍历一个聚合对象的内部元素
+ * 2. 相比于传统的编程模式，迭代器模式可以隐藏遍历元素的所需的操作
+ */
+$users = new IMooc\AllUser();
+foreach($users as $user){
+	var_dump($user->name);
+	$user->name = 'ysj_test_0157';
+}
+
+>>>>>>> 67c6aff16d3460cfe8fcb1afc9dbed9174c667f4
