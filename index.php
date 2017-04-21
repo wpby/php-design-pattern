@@ -363,3 +363,9 @@ $config =new \IMooc\Config(__DIR__.'/Config');
 var_dump('自动加载配置:');
 var_dump($config['controller']);
 
+/**
+ * 在工厂方法中读取配置，生成可配置化的对象
+ * 从配置文件中生成数据库连接
+ */
+$db = new IMooc\Factory::getDatabase();
+
