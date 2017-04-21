@@ -315,4 +315,13 @@ $canvas->addDecorator(new IMooc\ColorDrawDecorator("green"));
 $canvas->addDecorator(new IMooc\SizeDecorator("39px"));
 $canvas->draw();
 echo '装饰器模式结束:<br>';
-
+/**
+ * 代理模式
+ * 1.在客户端与实体之间建立一个代理对象(proxy),客户端对实体进行操作
+ * 全部委派为代理对象，隐藏实体的具体实现细节
+ * 2. proxy还可以与业务代码分离，部署到另外的服务器。业务代码中通过RPC(远程调用其他服务器)来委派任务
+ * 
+ */
+$proxy = new IMooc\Proxy();
+$proxy->getUserName(1);
+$proxy->setUserName(1, '代理模式');
