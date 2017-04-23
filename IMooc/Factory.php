@@ -39,4 +39,35 @@ class Factory
 		
 		return $user;
 	}
+
+	static function getDatabase($id = 'proxy')
+    {
+        if ($id == 'proxy')
+        {
+            if (!self::$proxy)
+            {
+                self::$proxy = new \IMooc\Database\Proxy;
+            }
+            return self::$proxy;
+        }
+  
+        $key = 'database_'.$id;
+        if ($id == 'slave')
+        {
+            $slaves = Application::getInstance()->config['database']['slave'];
+            $db_conf = $slaves[array_rand($slaves)];
+        }
+        else
+        {//这里单例出来的只是配置信息
+            $db_conf = Application::getInstance()->config['database'][$id];
+        }
+        $db = Register::get($key);
+        if (!$db) {
+            $db = new Database\MySQLi();
+           //根据配置信息实例$db,并储存到注册器数组中
+            $db->connect($db_conf['host'], $db_conf['user'], $db_conf['password'], $db_conf['dbname']);
+            Register::set($key, $db);
+        }
+        return $db;
+    }
 }
